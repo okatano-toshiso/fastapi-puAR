@@ -6,7 +6,8 @@ import os
 # DATABASE_URL = f"mysql+pymysql://{os.getenv('DB_USERNAME')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_DATABASE')}"
 # DATABASE_URL = os.getenv("DB_CONNECTION")
 # DATABASE_URL = "mysql+pymysql://root:rJlmEKzHAcnoHEFnJGsBudDkTfOSWSRF@mysql.railway.internal:3306/railway"
-DATABASE_URL = "mysql://root:rJlmEKzHAcnoHEFnJGsBudDkTfOSWSRF@roundhouse.proxy.rlwy.net:10446/railway"
+DATABASE_URL = "mysql+pymysql://root:rJlmEKzHAcnoHEFnJGsBudDkTfOSWSRF@roundhouse.proxy.rlwy.net:10446/railway"
+
 # DATABASE_URL = "mysql+pymysql://testuser:testpassword@localhost/testdb"
 # DATABASE_URL = "mysql+pymysql://testuser:testpassword@mysql_fastapi:3306/testdb"
 
