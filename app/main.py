@@ -6,6 +6,7 @@ import os
 from typing import List
 from datetime import date
 from .database import SessionLocal, Reservation, Line_User as LineUserModel
+
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 app = FastAPI()
 
