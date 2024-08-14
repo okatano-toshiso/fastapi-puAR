@@ -5,3 +5,4 @@ sqlalchemy
 databases
 # mysqlclient
 pymysql
+python-dotenv
