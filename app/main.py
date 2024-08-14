@@ -49,6 +49,10 @@ def get_db():
         db.close()
 
 
+@app.get("/")
+async def read_test():
+    return {"Hello, Worlds"}
+
 @app.get("/test/")
 async def read_test():
     return {"success": True}
