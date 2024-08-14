@@ -1,9 +1,11 @@
 from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import os
 
-DATABASE_URL = "mysql+pymysql://root:rJlmEKzHAcnoHEFnJGsBudDkTfOSWSRF@mysql.railway.internal:3306/railway"
+DATABASE_URL = os.getenv("DB_CONNECTION")
 
+# DATABASE_URL = "mysql+pymysql://root:rJlmEKzHAcnoHEFnJGsBudDkTfOSWSRF@mysql.railway.internal:3306/railway"
 # DATABASE_URL = "mysql+pymysql://testuser:testpassword@localhost/testdb"
 # DATABASE_URL = "mysql+pymysql://testuser:testpassword@mysql_fastapi:3306/testdb"
 
