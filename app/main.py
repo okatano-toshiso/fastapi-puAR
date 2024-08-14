@@ -49,6 +49,10 @@ def get_db():
         db.close()
 
 
+@app.get("/test/")
+async def read_test():
+    return {"success": True}
+
 @app.post("/reserve")
 def create_reservation(request_data: RequestData, db: Session = Depends(get_db)):
     for reserve in request_data.reserves:
