@@ -1,9 +1,12 @@
 from logging.config import fileConfig
-from sqlalchemy import engine_from_config
+from sqlalchemy import create_engine
 from sqlalchemy import pool
 from alembic import context
 
 config = context.config
+
+# Replace sqlalchemy.url with a pymysql compatible URL
+config.set_main_option('sqlalchemy.url', "mysql+pymysql://root:rJlmEKzHAcnoHEFnJGsBudDkTfOSWSRF@roundhouse.proxy.rlwy.net:10446/railway")
 
 fileConfig(config.config_file_name)
 
@@ -39,7 +42,7 @@ def run_migrations_online():
     In this scenario we need to create an Engine
     and associate a connection with the context.
     """
-    connectable = engine_from_config(
+    connectable = create_engine(
         config.get_section(config.config_ini_section),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
