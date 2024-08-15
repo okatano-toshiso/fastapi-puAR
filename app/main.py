@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 import os
-from typing import List
+from typing import List, Optional
 from datetime import date
 from .database import SessionLocal, Reservation, Line_User as LineUserModel
 
@@ -23,20 +23,19 @@ class Reserve(BaseModel):
     status: str
     count_of_person: int
     room_type: str
-    option_id: int
+    option_id: Optional[int] = None
     created_at: date
     updated_at: date
 
 class LineUserBase(BaseModel):
     line_id: str
     name: str
-    name_kana: str
+    name_kana: Optional[str] = None
     phone_number: str
-    age: int
-    adult: bool
+    age: Optional[int] = None
+    adult: bool = True
     created_at: date
     updated_at: date
-
 class RequestData(BaseModel):
     reserves: List[Reserve]
     line_users: List[LineUserBase]

@@ -27,7 +27,7 @@ class Reservation(Base):
     status = Column(String)
     count_of_person = Column(Integer)
     room_type = Column(String)
-    option_id = Column(Integer)
+    option_id = Column(Integer, nullable=True)
     created_at = Column(Date)
     updated_at = Column(Date)
 
@@ -36,10 +36,10 @@ class Line_User(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     line_id = Column(String(255), unique=True, index=True)
     name = Column(String(20))
-    name_kana = Column(String(20))
+    name_kana = Column(String(20), nullable=True)
     phone_number = Column(String(11))
-    age = Column(Integer)
-    adult = Column(Boolean)
+    age = Column(Integer, nullable=True)
+    adult = Column(Boolean, server_default=sa.text('TRUE'))
     created_at = Column(Date)
     updated_at = Column(Date)
 
