@@ -60,7 +60,7 @@ async def read_test():
 def create_reservation(request_data: RequestData, db: Session = Depends(get_db)):
 
     if request_data.token != ACCESS_TOKEN:
-        raise HTTPException(status_code=403, detail="Invalid token")
+        return {"message": "Invalid token"}
 
     for reserve in request_data.reserves:
         db_reservation = Reservation(
