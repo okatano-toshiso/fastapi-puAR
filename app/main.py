@@ -10,7 +10,7 @@ from .database import SessionLocal, Reservation, Line_User as LineUserModel
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 app = FastAPI()
 
-ACCESS_TOKEN = "123456789"
+# ACCESS_TOKEN = "123456789"
 # print(LINE_ACCESS_TOKEN)
 
 # models.Base.metadata.create_all(bind=engine)
@@ -59,8 +59,8 @@ async def read_test():
 @app.post("/reserve/")
 def create_reservation(request_data: RequestData, db: Session = Depends(get_db)):
 
-    if request_data.token != ACCESS_TOKEN:
-        return {"message": "Invalid Token"}
+    # if request_data.token != ACCESS_TOKEN:
+    #     return {"message": "Invalid Token"}
 
     for reserve in request_data.reserves:
         db_reservation = Reservation(
