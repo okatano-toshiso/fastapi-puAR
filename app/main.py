@@ -10,11 +10,12 @@ from .database import SessionLocal, Reservation, Line_User as LineUserModel
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 app = FastAPI()
 
-# ACCESS_TOKEN = "123456789"
+ACCESS_TOKEN = "3e6f2c9d6c7e48218e4f45f4a7c8d2d1"
 # print(LINE_ACCESS_TOKEN)
 
 # models.Base.metadata.create_all(bind=engine)
 class Reserve(BaseModel):
+    token: str
     reservation_id: int
     reservation_date: date
     check_in: date
@@ -28,6 +29,7 @@ class Reserve(BaseModel):
     updated_at: date
 
 class LineUserBase(BaseModel):
+    token: str
     line_id: str
     name: str
     name_kana: Optional[str] = None
@@ -59,10 +61,11 @@ async def read_test():
 @app.post("/reserve/")
 def create_reservation(request_data: RequestData, db: Session = Depends(get_db)):
 
-    # if request_data.token != ACCESS_TOKEN:
-    #     return {"message": "Invalid Token"}
-
     for reserve in request_data.reserves:
+
+        if reserve.token != ACCESS_TOKEN:
+            return {"message": "Invalid Token"}
+
         db_reservation = Reservation(
             reservation_id=reserve.reservation_id,
             reservation_date=reserve.reservation_date,
@@ -82,6 +85,10 @@ def create_reservation(request_data: RequestData, db: Session = Depends(get_db))
         db.refresh(db_reservation)
 
     for line_user in request_data.line_users:
+
+        if line_user.token != ACCESS_TOKEN:
+            return {"message": "Invalid Token"}
+
         db_line_user = LineUserModel(
             line_id=line_user.line_id,
             name=line_user.name,
