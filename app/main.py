@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 import os
 from typing import List, Optional
-from datetime import date
+from datetime import date, datetime
 from .database import SessionLocal, Reservation, Line_User as LineUserModel
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
@@ -25,8 +25,8 @@ class Reserve(BaseModel):
     count_of_person: int
     room_type: str
     option_id: Optional[int] = None
-    created_at: date
-    updated_at: date
+    created_at: datetime
+    updated_at: datetime
 
 class LineUserBase(BaseModel):
     token: str
@@ -36,8 +36,8 @@ class LineUserBase(BaseModel):
     phone_number: str
     age: Optional[int] = None
     adult: bool = True
-    created_at: date
-    updated_at: date
+    created_at: datetime
+    updated_at: datetime
 class RequestData(BaseModel):
     reserves: List[Reserve]
     line_users: List[LineUserBase]
