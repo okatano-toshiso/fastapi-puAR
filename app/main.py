@@ -5,15 +5,13 @@ from dotenv import load_dotenv
 import os
 from typing import List, Optional
 from datetime import date, datetime
-from .database import SessionLocal, Reservation, Line_User as LineUserModel
+from .models import SessionLocal, Reservation, Line_User as LineUserModel
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 app = FastAPI()
 
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
-print(ACCESS_TOKEN)
 
-# models.Base.metadata.create_all(bind=engine)
 class Reserve(BaseModel):
     token: str
     reservation_id: int
