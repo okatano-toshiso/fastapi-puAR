@@ -11,9 +11,7 @@ load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 app = FastAPI()
 
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
-
 print(ACCESS_TOKEN)
-print(os.environ)
 
 # models.Base.metadata.create_all(bind=engine)
 class Reserve(BaseModel):
