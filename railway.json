@@ -4,6 +4,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "alembic upgrade head && hypercorn app.main:app --bind \"[::]:$PORT\""
+    "startCommand": "alembic downgrade base && alembic upgrade head && hypercorn app.main:app --bind \"[::]:$PORT\""
   }
 }
