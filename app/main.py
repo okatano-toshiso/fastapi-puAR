@@ -10,8 +10,7 @@ from .database import SessionLocal, Reservation, Line_User as LineUserModel
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 app = FastAPI()
 
-ACCESS_TOKEN = "3e6f2c9d6c7e48218e4f45f4a7c8d2d1"
-# print(LINE_ACCESS_TOKEN)
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
 # models.Base.metadata.create_all(bind=engine)
 class Reserve(BaseModel):
