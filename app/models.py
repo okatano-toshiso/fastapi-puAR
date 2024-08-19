@@ -2,8 +2,9 @@ from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import sqlalchemy as sa
+import os
 
-DATABASE_URL = "mysql+pymysql://root:rJlmEKzHAcnoHEFnJGsBudDkTfOSWSRF@roundhouse.proxy.rlwy.net:10446/railway"
+DATABASE_URL = os.getenv("DB_URL")
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
