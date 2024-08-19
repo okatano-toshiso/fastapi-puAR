@@ -2,6 +2,7 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from alembic import context
+from app.models import Base
 
 config = context.config
 
@@ -9,8 +10,6 @@ config = context.config
 config.set_main_option('sqlalchemy.url', "mysql+pymysql://root:rJlmEKzHAcnoHEFnJGsBudDkTfOSWSRF@roundhouse.proxy.rlwy.net:10446/railway")
 
 fileConfig(config.config_file_name)
-
-from app.models import Base
 
 target_metadata = Base.metadata
 

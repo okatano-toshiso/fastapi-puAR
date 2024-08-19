@@ -1,24 +1,20 @@
 """create reserves table
-
 Revision ID: dea7f0ef9276
-Revises: 
+Revises:
 Create Date: 2024-08-07 09:38:28.768418
-
 """
-from typing import Sequence, Union
-import datetime
 
+from typing import Sequence, Union
 from sqlalchemy.sql import func
 from alembic import op
 import sqlalchemy as sa
-
-
 
 # revision identifiers, used by Alembic.
 revision: str = 'dea7f0ef9276'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
+
 
 def upgrade():
     op.create_table(
@@ -36,6 +32,7 @@ def upgrade():
         sa.Column('created_at', sa.DateTime, nullable=False, server_default=func.now()),
         sa.Column('updated_at', sa.DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
     )
+
 
 def downgrade():
     op.drop_table('line_reserves')

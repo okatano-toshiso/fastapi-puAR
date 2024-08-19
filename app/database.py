@@ -2,7 +2,8 @@ from .models import SessionLocal
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from datetime import date, datetime
-from typing import List, Optional
+from typing import Optional
+
 
 def get_db() -> Session:
     db = SessionLocal()
@@ -10,6 +11,7 @@ def get_db() -> Session:
         yield db
     finally:
         db.close()
+
 
 class LineReserveBase(BaseModel):
     token: str
@@ -25,6 +27,7 @@ class LineReserveBase(BaseModel):
     created_at: datetime
     updated_at: datetime
 
+
 class LineUserBase(BaseModel):
     token: str
     line_id: str
@@ -35,4 +38,3 @@ class LineUserBase(BaseModel):
     adult: bool = True
     created_at: datetime
     updated_at: datetime
-

@@ -8,6 +8,8 @@ DATABASE_URL = "mysql+pymysql://root:rJlmEKzHAcnoHEFnJGsBudDkTfOSWSRF@roundhouse
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+
+
 class LineReserve(Base):
     __tablename__ = "line_reserves"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
@@ -15,13 +17,14 @@ class LineReserve(Base):
     reservation_date = Column(Date)
     check_in = Column(Date)
     check_out = Column(Date)
-    line_id = Column(String(255)) 
+    line_id = Column(String(255))
     status = Column(String)
     count_of_person = Column(Integer)
     room_type = Column(String)
     option_id = Column(Integer, nullable=True)
     created_at = Column(Date)
     updated_at = Column(Date)
+
 
 class LineUser(Base):
     __tablename__ = "line_users"
@@ -34,4 +37,3 @@ class LineUser(Base):
     adult = Column(Boolean, server_default=sa.text('TRUE'))
     created_at = Column(Date)
     updated_at = Column(Date)
-

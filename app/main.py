@@ -12,18 +12,21 @@ app = FastAPI()
 
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
+
 class RequestData(BaseModel):
     line_reserves: List[LineReserveBase]
     line_users: List[LineUserBase]
 
 
 @app.get("/")
-async def read_test():
+async def read_index_test():
     return {"Hello, Worlds"}
+
 
 @app.get("/test/")
 async def read_test():
     return {"success": True}
+
 
 @app.post("/reserve/")
 def create_reservation(request_data: RequestData, db: Session = Depends(get_db)):
@@ -72,4 +75,3 @@ def create_reservation(request_data: RequestData, db: Session = Depends(get_db))
         db.refresh(db_line_user)
 
     return {"message": "Reservations processed successfully"}
-
