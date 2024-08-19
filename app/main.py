@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 import os
 from typing import List, Optional
 from datetime import date, datetime
-from .models import Base, engine,  Reservation, Line_User as LineUserModel
-from .database import get_db
+from .models import SessionLocal, Reservation, Line_User as LineUserModel
+
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 app = FastAPI()
@@ -39,6 +39,14 @@ class LineUserBase(BaseModel):
 class RequestData(BaseModel):
     reserves: List[Reserve]
     line_users: List[LineUserBase]
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 
 @app.get("/")
 async def read_test():
