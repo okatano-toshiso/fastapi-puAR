@@ -28,6 +28,9 @@ def upgrade():
         sa.Column('status', sa.String(20), nullable=False),
         sa.Column('count_of_person', sa.Integer, nullable=False),
         sa.Column('room_type', sa.String(20), nullable=False),
+        sa.Column('hotel_id', sa.Integer, nullable=True),
+        sa.Column('room_id', sa.Integer, nullable=True),
+        sa.Column('price', sa.Integer, nullable=True),
         sa.Column('option_id', sa.Integer, nullable=True),
         sa.Column('created_at', sa.DateTime, nullable=False, server_default=func.now()),
         sa.Column('updated_at', sa.DateTime, nullable=False, server_default=func.now(), onupdate=func.now())

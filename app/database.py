@@ -23,6 +23,8 @@ class LineReserveBase(BaseModel):
     status: str
     count_of_person: int
     room_type: str
+    hotel_id: Optional[int] = None
+    room_id: Optional[int] = None
     option_id: Optional[int] = None
     created_at: datetime
     updated_at: datetime
