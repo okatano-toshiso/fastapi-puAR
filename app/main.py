@@ -1,11 +1,10 @@
-from fastapi import FastAPI, HTTPException, status, Depends
+from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
-from typing import List, Optional
-from datetime import date, datetime
-from .models import SessionLocal, LineReserve, LineUser
+from typing import List
+from .models import LineReserve, LineUser
 from .database import get_db, LineReserveBase, LineUserBase
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
