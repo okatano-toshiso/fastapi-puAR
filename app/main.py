@@ -37,9 +37,10 @@ def fetch_latest_reserve_id(request_data: RequestData, db: Session = Depends(get
         latest_reserve = db.query(LineReserveBase).order_by(LineReserveBase.reservation_id.desc()).first()
 
         if latest_reserve:
-            return {"latest_reserve_id": latest_reserve.reservation_id}
+            return latest_reserve
         else:
-            return {"latest_reserve_id": 1}
+            return 1(int)
+
 
 @app.post("/reserve/")
 def create_reservation(request_data: RequestData, db: Session = Depends(get_db)):
