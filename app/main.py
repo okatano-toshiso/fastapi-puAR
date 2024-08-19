@@ -5,14 +5,13 @@ from dotenv import load_dotenv
 import os
 from typing import List, Optional
 from datetime import date, datetime
-from .models import SessionLocal, Reservation, Line_User as LineUserModel
-
+from .models import SessionLocal, LineReserve, LineUser
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 app = FastAPI()
 
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
-class Reserve(BaseModel):
+class LineReserveBase(BaseModel):
     token: str
     reservation_id: int
     reservation_date: date
@@ -37,7 +36,7 @@ class LineUserBase(BaseModel):
     created_at: datetime
     updated_at: datetime
 class RequestData(BaseModel):
-    reserves: List[Reserve]
+    line_reserves: List[LineReserveBase]
     line_users: List[LineUserBase]
 
 def get_db():
@@ -59,35 +58,35 @@ async def read_test():
 @app.post("/reserve/")
 def create_reservation(request_data: RequestData, db: Session = Depends(get_db)):
 
-    for reserve in request_data.reserves:
+    for line_reserve in request_data.line_reserves:
 
-        if reserve.token != ACCESS_TOKEN:
+        if line_reserve.token != ACCESS_TOKEN:
             raise HTTPException(status_code=401, detail="Invalid Token")
 
-        db_reservation = Reservation(
-            reservation_id=reserve.reservation_id,
-            reservation_date=reserve.reservation_date,
-            line_id=reserve.line_id,
-            check_in=reserve.check_in,
-            check_out=reserve.check_out,
-            status=reserve.status,
-            count_of_person=reserve.count_of_person,
-            room_type=reserve.room_type,
-            option_id=reserve.option_id,
-            created_at=reserve.created_at,
-            updated_at=reserve.updated_at
+        db_line_reserve = LineReserve(
+            reservation_id=line_reserve.reservation_id,
+            reservation_date=line_reserve.reservation_date,
+            line_id=line_reserve.line_id,
+            check_in=line_reserve.check_in,
+            check_out=line_reserve.check_out,
+            status=line_reserve.status,
+            count_of_person=line_reserve.count_of_person,
+            room_type=line_reserve.room_type,
+            option_id=line_reserve.option_id,
+            created_at=line_reserve.created_at,
+            updated_at=line_reserve.updated_at
         )
 
-        db.add(db_reservation)
+        db.add(db_line_reserve)
         db.commit()
-        db.refresh(db_reservation)
+        db.refresh(db_line_reserve)
 
     for line_user in request_data.line_users:
 
         if line_user.token != ACCESS_TOKEN:
-            return {"message": "Invalid Token"}
+            raise HTTPException(status_code=401, detail="Invalid Token")
 
-        db_line_user = LineUserModel(
+        db_line_user = LineUser(
             line_id=line_user.line_id,
             name=line_user.name,
             name_kana=line_user.name_kana,

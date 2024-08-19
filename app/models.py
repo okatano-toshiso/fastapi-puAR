@@ -9,7 +9,7 @@ DATABASE_URL = "mysql+pymysql://root:rJlmEKzHAcnoHEFnJGsBudDkTfOSWSRF@roundhouse
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
-class Reservation(Base):
+class LineReserve(Base):
     __tablename__ = "line_reserves"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     reservation_id = Column(Integer, unique=True, index=True)
@@ -24,7 +24,7 @@ class Reservation(Base):
     created_at = Column(Date)
     updated_at = Column(Date)
 
-class Line_User(Base):
+class LineUser(Base):
     __tablename__ = "line_users"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     line_id = Column(String(255), unique=True, index=True)

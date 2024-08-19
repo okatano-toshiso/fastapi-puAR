@@ -10,7 +10,7 @@ config.set_main_option('sqlalchemy.url', "mysql+pymysql://root:rJlmEKzHAcnoHEFnJ
 
 fileConfig(config.config_file_name)
 
-from app.models import Reservation, Line_User, Base
+from app.models import Base
 
 target_metadata = Base.metadata
 
