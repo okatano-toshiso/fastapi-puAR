@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import os
 from typing import List, Optional
 from datetime import date, datetime
-from .models import SessionLocal, Reservation, Line_User as LineUserModel
+from .models import Base, engine,  Reservation, Line_User as LineUserModel
 from .database import get_db
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
