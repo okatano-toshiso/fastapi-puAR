@@ -64,7 +64,7 @@ def create_reservation(request_data: RequestData, db: Session = Depends(get_db))
     for reserve in request_data.reserves:
 
         if reserve.token != ACCESS_TOKEN:
-            return {"message": "Invalid Token"}
+            raise HTTPException(status_code=401, detail="Invalid Token")
 
         db_reservation = Reservation(
             reservation_id=reserve.reservation_id,
