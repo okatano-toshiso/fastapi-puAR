@@ -13,7 +13,6 @@ app = FastAPI()
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
 print(ACCESS_TOKEN)
-print({{ACCESS_TOKEN}})
 print(os.environ)
 
 # models.Base.metadata.create_all(bind=engine)
