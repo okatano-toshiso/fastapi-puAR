@@ -6,13 +6,11 @@ import os
 from typing import List, Optional
 from datetime import date, datetime
 from .models import SessionLocal, Reservation, Line_User as LineUserModel
-from .database import get_db
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 app = FastAPI()
 
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
-
 class Reserve(BaseModel):
     token: str
     reservation_id: int
