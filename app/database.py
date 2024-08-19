@@ -15,16 +15,18 @@ def get_db() -> Session:
 
 class LineReserveBase(BaseModel):
     token: str
+    version_number: Optional[int] = None
     reservation_id: int
     reservation_date: date
     check_in: date
     check_out: date
     line_id: str
     status: str
+    seq: Optional[int] = None
     count_of_person: int
+    hotel_code: Optional[int] = None
+    room_number: Optional[int] = None
     room_type: str
-    hotel_id: Optional[int] = None
-    room_id: Optional[int] = None
     option_id: Optional[int] = None
     created_at: datetime
     updated_at: datetime

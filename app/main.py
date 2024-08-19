@@ -37,16 +37,18 @@ def create_reservation(request_data: RequestData, db: Session = Depends(get_db))
             raise HTTPException(status_code=401, detail="Invalid Token")
 
         db_line_reserve = LineReserve(
+            version_number=line_reserve.version_number,
             reservation_id=line_reserve.reservation_id,
             reservation_date=line_reserve.reservation_date,
             line_id=line_reserve.line_id,
             check_in=line_reserve.check_in,
             check_out=line_reserve.check_out,
             status=line_reserve.status,
+            seq=line_reserve.seq,
             count_of_person=line_reserve.count_of_person,
+            hotel_code=line_reserve.hotel_code,
+            room_number=line_reserve.room_number,
             room_type=line_reserve.room_type,
-            hotel_id=line_reserve.hotel_id,
-            room_id=line_reserve.room_id,
             option_id=line_reserve.option_id,
             created_at=line_reserve.created_at,
             updated_at=line_reserve.updated_at
