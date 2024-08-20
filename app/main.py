@@ -40,7 +40,7 @@ async def read_test():
 def fetch_latest_reserve_id(request_data: LatestData, db: Session = Depends(get_db)):
     # return {"success": ACCESS_TOKEN}
     for data in request_data:
-        if data != ACCESS_TOKEN:
+        if data == ACCESS_TOKEN:
             raise HTTPException(status_code=401, detail=ACCESS_TOKEN)
 
         latest_reserve_id = db.query(LineReserveBase).order_by(LineReserveBase.reservation_id.desc()).first()
