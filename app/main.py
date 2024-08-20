@@ -58,7 +58,7 @@ def create_reservation(request_data: RequestData, db: Session = Depends(get_db))
             raise HTTPException(status_code=401, detail="Invalid Token")
 
         # 最新の予約IDを取得
-        latest_reserve = db.query(LineReserveBase).order_by(LineReserveBase.reservation_id.desc()).first()
+        latest_reserve = db.query(LineReserve).order_by(LineReserve.reservation_id.desc()).first()
 
         if latest_reserve:
             return {"latest_reserve_id": latest_reserve.reservation_id}
