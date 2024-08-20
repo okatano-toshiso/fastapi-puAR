@@ -13,7 +13,7 @@ app = FastAPI()
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
 
-class LatestReserveId(BaseModel):
+class LatestReserveData(BaseModel):
     token: str
 
 
@@ -36,34 +36,18 @@ async def read_test():
     return {"success": True}
 
 
-# @app.post("/latest/")
-# def create_reservation(request_data: RequestData, db: Session = Depends(get_db)):
-#     for line_reserve in request_data.line_reserves:
-
-#         if line_reserve.token != ACCESS_TOKEN:
-#             raise HTTPException(status_code=401, detail="Invalid Token")
-
-#         latest_reserve_id = db.query(LineReserveBase).order_by(LineReserveBase.reservation_id.desc()).first()
-
-#         if latest_reserve_id:
-#             return latest_reserve_id
-#         else:
-#             return "ID取得失敗"
-
 @app.post("/latest/")
-def create_reservation(request_data: RequestData, db: Session = Depends(get_db)):
-    for line_reserve in request_data.line_reserves:
+def create_reservation(request_data: LatestReserveData, db: Session = Depends(get_db)):
 
-        if line_reserve.token != ACCESS_TOKEN:
-            raise HTTPException(status_code=401, detail="Invalid Token")
+    if request_data.token != ACCESS_TOKEN:
+        raise HTTPException(status_code=401, detail="Invalid Token")
 
-        # 最新の予約IDを取得
-        latest_reserve = db.query(LineReserve).order_by(LineReserve.reservation_id.desc()).first()
+    latest_reserve = db.query(LineReserve).order_by(LineReserve.reservation_id.desc()).first()
 
-        if latest_reserve:
-            return {"latest_reserve_id": latest_reserve.reservation_id}
-        else:
-            return {"error": "ID取得失敗"}
+    if latest_reserve:
+        return {"latest_reserve_id": latest_reserve.reservation_id}
+    else:
+        return {"error": "ID取得失敗"}
 
 
 
