@@ -17,10 +17,6 @@ class LatestReserveData(BaseModel):
     token: str
 
 
-class LatestData(BaseModel):
-    latest_id: List[LatestReserveId]
-
-
 class RequestData(BaseModel):
     line_reserves: List[LineReserveBase]
     line_users: List[LineUserBase]
