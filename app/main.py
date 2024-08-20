@@ -13,6 +13,14 @@ app = FastAPI()
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
 
+class LatestReserveId(BaseModel):
+    token: str
+
+
+class LatestData(BaseModel):
+    latest_id: List[LatestReserveId]
+
+
 class RequestData(BaseModel):
     line_reserves: List[LineReserveBase]
     line_users: List[LineUserBase]
@@ -29,15 +37,15 @@ async def read_test():
 
 
 @app.post("/latest/")
-def fetch_latest_reserve_id(request_data: RequestData, db: Session = Depends(get_db)):
-    for line_reserve in request_data.line_reserves:
-        if line_reserve.token != ACCESS_TOKEN:
+def fetch_latest_reserve_id(request_data: LatestData, db: Session = Depends(get_db)):
+    for data in request_data:
+        if data.token != ACCESS_TOKEN:
             raise HTTPException(status_code=401, detail="Invalid Token")
 
-        latest_reserve = db.query(LineReserveBase).order_by(LineReserveBase.reservation_id.desc()).first()
+        latest_reserve_id = db.query(LineReserveBase).order_by(LineReserveBase.reservation_id.desc()).first()
 
-        if latest_reserve:
-            return latest_reserve
+        if latest_reserve_id:
+            return latest_reserve_id
         else:
             return 1(int)
 
