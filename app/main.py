@@ -38,8 +38,9 @@ async def read_test():
 
 @app.post("/latest/")
 def fetch_latest_reserve_id(request_data: LatestData, db: Session = Depends(get_db)):
-    return {"success": True}
-    # for data in request_data:
+    # return {"success": True}
+    for data in request_data:
+        return data
     #     if data.token != ACCESS_TOKEN:
     #         raise HTTPException(status_code=401, detail="Invalid Token")
 
