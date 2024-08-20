@@ -37,11 +37,11 @@ async def read_test():
 
 
 @app.post("/latest/")
-def fetch_latest_reserve_id(request_data: LatestData, db: Session = Depends(get_db)):
-    # return {"success": ACCESS_TOKEN}
-    for data in request_data:
-        if data == ACCESS_TOKEN:
-            raise HTTPException(status_code=401, detail=ACCESS_TOKEN)
+def create_reservation(request_data: RequestData, db: Session = Depends(get_db)):
+    for line_reserve in request_data.line_reserves:
+
+        if line_reserve.token != ACCESS_TOKEN:
+            raise HTTPException(status_code=401, detail="Invalid Token")
 
         latest_reserve_id = db.query(LineReserveBase).order_by(LineReserveBase.reservation_id.desc()).first()
 
