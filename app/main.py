@@ -45,7 +45,7 @@ def create_reservation(request_data: LatestReserveData, db: Session = Depends(ge
     if latest_reserve:
         return {"latest_reserve_id": latest_reserve.reservation_id}
     else:
-        return 0
+        return {"latest_reserve_id": 0}
 
 @app.post("/reserve/")
 def create_reservation(request_data: RequestData, db: Session = Depends(get_db)):
