@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
+from sqlalchemy import and_
 from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
