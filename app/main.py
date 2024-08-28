@@ -69,21 +69,22 @@ def create_reservation(request_data: CheckReserveData, db: Session = Depends(get
         )).first()
 
     if reserve_datas:
+        line_reserve, line_user = reserve_datas  # タプルで返されるので分解する
         reserve_data = {
-            "reservation_id": reserve_datas.LineReserveBase.reservation_id,
-            "reservation_date": reserve_datas.LineReserveBase.reservation_date,
-            "check_in": reserve_datas.LineReserveBase.check_in,
-            "check_out": reserve_datas.LineReserveBase.check_out,
-            "status": reserve_datas.LineReserveBase.status,
-            "count_of_person": reserve_datas.LineReserveBase.count_of_person,
-            "hotel_code": reserve_datas.LineReserveBase.hotel_code,
-            "room_number": reserve_datas.LineReserveBase.room_number,
-            "room_type": reserve_datas.LineReserveBase.room_type,
-            "name": reserve_datas.LineUserBase.name,
-            "name_kana": reserve_datas.LineUserBase.name_kana,
-            "phone_number": reserve_datas.LineUserBase.phone_number,
-            "age": reserve_datas.LineUserBase.age,
-            "adult": reserve_datas.LineUserBase.adult
+            "reservation_id": line_reserve.reservation_id,
+            "reservation_date": line_reserve.reservation_date,
+            "check_in": line_reserve.check_in,
+            "check_out": line_reserve.check_out,
+            "status": line_reserve.status,
+            "count_of_person": line_reserve.count_of_person,
+            "hotel_code": line_reserve.hotel_code,
+            "room_number": line_reserve.room_number,
+            "room_type": line_reserve.room_type,
+            "name": line_user.name,
+            "name_kana": line_user.name_kana,
+            "phone_number": line_user.phone_number,
+            "age": line_user.age,
+            "adult": line_user.adult
         }
         return reserve_data
     else:
