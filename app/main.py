@@ -12,6 +12,13 @@ app = FastAPI()
 
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
+class CheckReserveData(BaseModel):
+    token: str
+    line_id: str
+    reserve_id: int
+    name: str
+    phone_number: str
+
 
 class LatestReserveData(BaseModel):
     token: str
@@ -25,8 +32,6 @@ class RequestData(BaseModel):
 @app.get("/")
 async def read_index_test():
     return {"Hello, Worlds"}
-
-
 
 
 @app.get("/test/")
@@ -46,6 +51,43 @@ def create_reservation(request_data: LatestReserveData, db: Session = Depends(ge
         return {"latest_reserve_id": latest_reserve.reservation_id}
     else:
         return {"latest_reserve_id": 0}
+
+
+@app.post("/reserve/check/")
+def create_reservation(request_data: CheckReserveData, db: Session = Depends(get_db)):
+
+    if request_data.token != ACCESS_TOKEN:
+        raise HTTPException(status_code=401, detail="Invalid Token")
+
+    reserve_datas = db.query(LineReserveBase, LineUserBase)\
+        .join(LineUserBase, LineReserveBase.line_id == LineUserBase.line_id)\
+        .filter(and_(
+            LineReserveBase.reservation_id == request_data.reserve_id,
+            LineUserBase.name == request_data.name,
+            LineUserBase.phone_number == request_data.phone_number
+        )).first()
+
+    if reserve_datas:
+        reserve_data = {
+            "reservation_id": reserve_datas.LineReserveBase.reservation_id,
+            "reservation_date": reserve_datas.LineReserveBase.reservation_date,
+            "check_in": reserve_datas.LineReserveBase.check_in,
+            "check_out": reserve_datas.LineReserveBase.check_out,
+            "status": reserve_datas.LineReserveBase.status,
+            "count_of_person": reserve_datas.LineReserveBase.count_of_person,
+            "hotel_code": reserve_datas.LineReserveBase.hotel_code,
+            "room_number": reserve_datas.LineReserveBase.room_number,
+            "room_type": reserve_datas.LineReserveBase.room_type,
+            "name": reserve_datas.LineUserBase.name,
+            "name_kana": reserve_datas.LineUserBase.name_kana,
+            "phone_number": reserve_datas.LineUserBase.phone_number,
+            "age": reserve_datas.LineUserBase.age,
+            "adult": reserve_datas.LineUserBase.adult
+        }
+        return reserve_data
+    else:
+        raise HTTPException(status_code=404, detail="Reservation not found")
+
 
 @app.post("/reserve/")
 def create_reservation(request_data: RequestData, db: Session = Depends(get_db)):
