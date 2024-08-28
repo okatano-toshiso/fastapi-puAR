@@ -59,12 +59,12 @@ def create_reservation(request_data: CheckReserveData, db: Session = Depends(get
     if request_data.token != ACCESS_TOKEN:
         raise HTTPException(status_code=401, detail="Invalid Token")
 
-    reserve_datas = db.query(LineReserveBase, LineUserBase)\
-        .join(LineUserBase, LineReserveBase.line_id == LineUserBase.line_id)\
+    reserve_datas = db.query(LineReserve, LineUser)\
+        .join(LineUser, LineReserve.line_id == LineUser.line_id)\
         .filter(and_(
-            LineReserveBase.reservation_id == request_data.reserve_id,
-            LineUserBase.name == request_data.name,
-            LineUserBase.phone_number == request_data.phone_number
+            LineReserve.reservation_id == request_data.reserve_id,
+            LineUser.name == request_data.name,
+            LineUser.phone_number == request_data.phone_number
         )).first()
 
     if reserve_datas:
