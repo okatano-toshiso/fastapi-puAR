@@ -64,6 +64,7 @@ def create_reservation(request_data: CheckReserveData, db: Session = Depends(get
         .join(LineUser, LineReserve.line_id == LineUser.line_id)\
         .filter(and_(
             LineReserve.reservation_id == request_data.reserve_id,
+            LineUser.line_id == request_data.line_id,
             LineUser.name == request_data.name,
             LineUser.phone_number == request_data.phone_number
         )).first()
