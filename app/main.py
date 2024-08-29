@@ -70,7 +70,7 @@ def create_reservation(request_data: CheckReserveData, db: Session = Depends(get
         )).first()
 
     if reserve_datas:
-        line_reserve, line_user = reserve_datas  # タプルで返されるので分解する
+        line_reserve, line_user = reserve_datas
         reserve_data = {
             "reservation_id": line_reserve.reservation_id,
             "reservation_date": line_reserve.reservation_date,
