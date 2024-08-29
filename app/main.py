@@ -94,6 +94,8 @@ def create_reservation(request_data: CheckReserveData, db: Session = Depends(get
 @app.post("/reserve/")
 def create_reservation(request_data: RequestData, db: Session = Depends(get_db)):
 
+    print(request_data)
+
     for line_reserve in request_data.line_reserves:
 
         if line_reserve.token != ACCESS_TOKEN:
@@ -122,7 +124,6 @@ def create_reservation(request_data: RequestData, db: Session = Depends(get_db))
         db.refresh(db_line_reserve)
 
     for line_user in request_data.line_users:
-
         if line_user.token != ACCESS_TOKEN:
             raise HTTPException(status_code=401, detail="Invalid Token")
 
