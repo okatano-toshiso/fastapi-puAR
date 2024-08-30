@@ -17,7 +17,7 @@ ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 class CheckReserveData(BaseModel):
     token: str
     line_id: str
-    reserve_id: int
+    # reserve_id: int
     name: str
     phone_number: str
 
