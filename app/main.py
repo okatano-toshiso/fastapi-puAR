@@ -129,19 +129,26 @@ def create_reservation(request_data: RequestData, db: Session = Depends(get_db))
         if line_user.token != ACCESS_TOKEN:
             raise HTTPException(status_code=401, detail="Invalid Token")
 
-        db_line_user = LineUser(
+        existing_user = db.query(LineUser).filter_by(
             line_id=line_user.line_id,
             name=line_user.name,
-            name_kana=line_user.name_kana,
-            phone_number=line_user.phone_number,
-            age=line_user.age,
-            adult=line_user.adult,
-            created_at=line_user.created_at,
-            updated_at=line_user.updated_at
-        )
+            phone_number=line_user.phone_number
+        ).first()
 
-        db.add(db_line_user)
-        db.commit()
-        db.refresh(db_line_user)
+        if not existing_user:
+            db_line_user = LineUser(
+                line_id=line_user.line_id,
+                name=line_user.name,
+                name_kana=line_user.name_kana,
+                phone_number=line_user.phone_number,
+                age=line_user.age,
+                adult=line_user.adult,
+                created_at=line_user.created_at,
+                updated_at=line_user.updated_at
+            )
+
+            db.add(db_line_user)
+            db.commit()
+            db.refresh(db_line_user)
 
     return {"message": "Reservations processed successfully"}
