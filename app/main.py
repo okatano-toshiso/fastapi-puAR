@@ -71,24 +71,26 @@ def create_reservation(request_data: CheckReserveData, db: Session = Depends(get
         )).limit(5).all()  # 最大5件まで取得する
 
     if reserve_datas:
-        line_reserve, line_user = reserve_datas
-        reserve_data = {
-            "reservation_id": line_reserve.reservation_id,
-            "reservation_date": line_reserve.reservation_date,
-            "check_in": line_reserve.check_in,
-            "check_out": line_reserve.check_out,
-            "status": line_reserve.status,
-            "count_of_person": line_reserve.count_of_person,
-            "hotel_code": line_reserve.hotel_code,
-            "room_number": line_reserve.room_number,
-            "room_type": line_reserve.room_type,
-            "name": line_user.name,
-            "name_kana": line_user.name_kana,
-            "phone_number": line_user.phone_number,
-            "age": line_user.age,
-            "adult": line_user.adult
-        }
-        return reserve_data
+        reserves_list = []
+        for line_reserve, line_user in reserve_datas:
+            reserve_data = {
+                "reservation_id": line_reserve.reservation_id,
+                "reservation_date": line_reserve.reservation_date,
+                "check_in": line_reserve.check_in,
+                "check_out": line_reserve.check_out,
+                "status": line_reserve.status,
+                "count_of_person": line_reserve.count_of_person,
+                "hotel_code": line_reserve.hotel_code,
+                "room_number": line_reserve.room_number,
+                "room_type": line_reserve.room_type,
+                "name": line_user.name,
+                "name_kana": line_user.name_kana,
+                "phone_number": line_user.phone_number,
+                "age": line_user.age,
+                "adult": line_user.adult
+            }
+            reserves_list.append(reserve_data)
+        return {"reservations": reserves_list}
     else:
         raise HTTPException(status_code=404, detail="Reservation not found")
 
