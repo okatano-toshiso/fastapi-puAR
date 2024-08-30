@@ -64,11 +64,11 @@ def create_reservation(request_data: CheckReserveData, db: Session = Depends(get
     reserve_datas = db.query(LineReserve, LineUser)\
         .join(LineUser, LineReserve.line_id == LineUser.line_id)\
         .filter(and_(
-            LineReserve.reservation_id == request_data.reserve_id,
+            # LineReserve.reservation_id == request_data.reserve_id,
             LineUser.line_id == request_data.line_id,
             LineUser.name == request_data.name,
             LineUser.phone_number == request_data.phone_number
-        )).first()
+        )).limit(5).all()  # 最大5件まで取得する
 
     if reserve_datas:
         line_reserve, line_user = reserve_datas
