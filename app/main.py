@@ -8,7 +8,6 @@ from typing import List
 from .models import LineReserve, LineUser
 from .database import get_db, LineReserveBase, LineUserBase
 
-
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 app = FastAPI()
 
