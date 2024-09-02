@@ -26,6 +26,8 @@ def upgrade():
         sa.Column('check_in', sa.Date, nullable=False),
         sa.Column('check_out', sa.Date, nullable=False),
         sa.Column('line_id', sa.String(255), nullable=False),
+        sa.Column('name', sa.String(255), nullable=False),
+        sa.Column('phone_number', sa.String(255), nullable=False),
         sa.Column('status', sa.String(20), nullable=False),
         sa.Column('seq', sa.Integer, nullable=True),
         sa.Column('count_of_person', sa.Integer, nullable=False),

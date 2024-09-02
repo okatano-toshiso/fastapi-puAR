@@ -65,6 +65,9 @@ def create_reservation(request_data: CheckReserveData, db: Session = Depends(get
         .join(LineUser, LineReserve.line_id == LineUser.line_id)\
         .filter(and_(
             # LineReserve.reservation_id == request_data.reserve_id,
+            LineReserve.line_id == request_data.line_id,
+            LineReserve.name == request_data.name,
+            LineReserve.phone_number == request_data.phone_number,
             LineUser.line_id == request_data.line_id,
             LineUser.name == request_data.name,
             LineUser.phone_number == request_data.phone_number
@@ -110,6 +113,8 @@ def create_reservation(request_data: RequestData, db: Session = Depends(get_db))
             reservation_id=line_reserve.reservation_id,
             reservation_date=line_reserve.reservation_date,
             line_id=line_reserve.line_id,
+            name=line_reserve.name,
+            phone_number=line_reserve.phone_number,
             check_in=line_reserve.check_in,
             check_out=line_reserve.check_out,
             status=line_reserve.status,

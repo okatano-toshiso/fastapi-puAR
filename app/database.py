@@ -21,6 +21,8 @@ class LineReserveBase(BaseModel):
     check_in: date
     check_out: date
     line_id: str
+    name: str
+    phone_number: str
     status: str
     seq: Optional[int] = None
     count_of_person: int

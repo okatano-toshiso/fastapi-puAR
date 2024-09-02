@@ -20,6 +20,8 @@ class LineReserve(Base):
     check_in = Column(Date)
     check_out = Column(Date)
     line_id = Column(String(255))
+    name = Column(String(20))
+    phone_number = Column(String(11))
     status = Column(String)
     seq = Column(Integer, nullable=True)
     count_of_person = Column(Integer)
