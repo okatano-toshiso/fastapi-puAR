@@ -68,7 +68,7 @@ def create_reservation(request_data: CheckReserveData, db: Session = Depends(get
             LineUser.line_id == request_data.line_id,
             LineUser.name == request_data.name,
             LineUser.phone_number == request_data.phone_number
-        )).limit(5).all()  # 最大5件まで取得する
+        )).order_by(LineReserve.reservation_date.desc()).limit(10).all()
 
     if reserve_datas:
         reserves_list = []
